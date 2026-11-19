@@ -1,42 +1,42 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = (_env, argv) => {
-  const isProd = argv.mode === 'production';
+  const isProd = argv.mode === "production";
 
   return {
-    entry: './src/index.tsx',
+    entry: "./src/index.tsx",
     output: {
-      path: path.resolve(__dirname, 'dist'),
-      filename: isProd ? 'js/[name].[contenthash:8].js' : 'js/[name].js',
-      // relative paths so the build works from a sub-folder (gh-pages)
-      publicPath: isProd ? './' : '/',
+      path: path.resolve(__dirname, "dist"),
+      filename: isProd ? "js/[name].[contenthash:8].js" : "js/[name].js",
       clean: true,
     },
     resolve: {
-      extensions: ['.tsx', '.ts', '.js'],
+      extensions: [".tsx", ".ts", ".js"],
     },
-    devtool: isProd ? false : 'eval-source-map',
+    devtool: isProd ? false : "eval-source-map",
     module: {
       rules: [
         {
           test: /\.tsx?$/,
-          use: 'ts-loader',
+          use: "ts-loader",
           exclude: /node_modules/,
         },
         {
           test: /\.css$/,
           use: [
-            isProd ? MiniCssExtractPlugin.loader : 'style-loader',
+            isProd ? MiniCssExtractPlugin.loader : "style-loader",
             {
-              loader: 'css-loader',
+              loader: "css-loader",
               options: {
                 modules: {
                   auto: /\.module\.css$/,
-                  localIdentName: isProd ? '[hash:base64:6]' : '[name]__[local]',
+                  localIdentName: isProd
+                    ? "[hash:base64:6]"
+                    : "[name]__[local]",
                   namedExport: false,
-                  exportLocalsConvention: 'as-is',
+                  exportLocalsConvention: "as-is",
                 },
               },
             },
@@ -44,13 +44,16 @@ module.exports = (_env, argv) => {
         },
         {
           test: /\.(svg|png|jpe?g|woff2?)$/,
-          type: 'asset',
+          type: "asset",
         },
       ],
     },
     plugins: [
-      new HtmlWebpackPlugin({ template: './public/index.html' }),
-      isProd && new MiniCssExtractPlugin({ filename: 'css/[name].[contenthash:8].css' }),
+      new HtmlWebpackPlugin({ template: "./public/index.html" }),
+      isProd &&
+        new MiniCssExtractPlugin({
+          filename: "css/[name].[contenthash:8].css",
+        }),
     ].filter(Boolean),
     devServer: {
       port: 3000,
