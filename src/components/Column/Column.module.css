@@ -10,13 +10,14 @@
 
 .header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
-  min-height: 29px;
+  height: 29px;
 }
 
 .icon {
   flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .title {
@@ -28,4 +29,9 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* Заголовок получает фокус программно (после удаления последней карточки). */
+.title:focus {
+  outline: none;
 }

@@ -43,7 +43,27 @@ module.exports = (_env, argv) => {
           ],
         },
         {
+          test: /\.svg$/,
+          resourceQuery: /react/,
+          use: [
+            {
+              loader: "@svgr/webpack",
+              options: {
+                svgoConfig: {
+                  plugins: [
+                    {
+                      name: "preset-default",
+                      params: { overrides: { removeViewBox: false } },
+                    },
+                  ],
+                },
+              },
+            },
+          ],
+        },
+        {
           test: /\.(svg|png|jpe?g|webp|woff2?)$/,
+          resourceQuery: { not: [/react/] },
           type: "asset",
         },
       ],

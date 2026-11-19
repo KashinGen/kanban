@@ -7,9 +7,10 @@ import styles from "./Board.module.css";
 
 interface Props {
   tasks: Task[];
+  onDelete: (id: Task["id"]) => void;
 }
 
-export const Board = ({ tasks }: Props) => {
+export const Board = ({ tasks, onDelete }: Props) => {
   const byType = useMemo(() => groupTasksByType(tasks), [tasks]);
 
   return (
@@ -20,6 +21,7 @@ export const Board = ({ tasks }: Props) => {
           title={column.title}
           icon={column.icon}
           tasks={byType[column.type]}
+          onDelete={onDelete}
         />
       ))}
     </div>
