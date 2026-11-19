@@ -1,7 +1,7 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import type { Task, TaskType } from "../../types/task";
 import { useTasksActions } from "../../state/TasksContext";
-import { useDrag } from "../Board/DragContext";
+import { useDragActions, useDraggedTask } from "../Board/DragContext";
 import { TaskCard } from "../TaskCard/TaskCard";
 import styles from "./Column.module.css";
 
@@ -14,7 +14,8 @@ interface Props {
 
 export const Column = ({ type, title, icon, tasks }: Props) => {
   const { deleteTask, moveTask } = useTasksActions();
-  const { draggedTask, endDrag } = useDrag();
+  const draggedTask = useDraggedTask();
+  const { endDrag } = useDragActions();
 
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
@@ -23,12 +24,17 @@ export const Column = ({ type, title, icon, tasks }: Props) => {
 
   const canDrop = draggedTask !== null && draggedTask.type !== type;
 
+  const tasksRef = useRef(tasks);
+  useLayoutEffect(() => {
+    tasksRef.current = tasks;
+  }, [tasks]);
+
   const handleDelete = useCallback(
     (id: Task["id"]) => {
-      focusIndexRef.current = tasks.findIndex((task) => task.id === id);
+      focusIndexRef.current = tasksRef.current.findIndex((task) => task.id === id);
       deleteTask(id);
     },
-    [tasks, deleteTask],
+    [deleteTask],
   );
 
   useLayoutEffect(() => {
@@ -82,7 +88,12 @@ export const Column = ({ type, title, icon, tasks }: Props) => {
         </h2>
       </header>
       {tasks.map((task) => (
-        <TaskCard key={task.id} task={task} onDelete={handleDelete} />
+        <TaskCard
+          key={task.id}
+          task={task}
+          isDragging={draggedTask?.id === task.id}
+          onDelete={handleDelete}
+        />
       ))}
     </section>
   );

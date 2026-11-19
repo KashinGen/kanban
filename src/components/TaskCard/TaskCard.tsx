@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import type { Task } from "../../types/task";
 import { formatDate } from "../../utils/date";
 import { isOverdue } from "../../utils/isOverdue";
 import { useTasksActions } from "../../state/TasksContext";
-import { useDrag } from "../Board/DragContext";
+import { useDragActions } from "../Board/DragContext";
 import { TaskEditForm } from "../TaskEditForm/TaskEditForm";
 import EditIcon from "../../assets/icons/edit.svg?react";
 import TrashIcon from "../../assets/icons/trash.svg?react";
@@ -11,13 +11,13 @@ import styles from "./TaskCard.module.css";
 
 interface Props {
   task: Task;
+  isDragging: boolean;
   onDelete: (id: Task["id"]) => void;
 }
 
-export const TaskCard = ({ task, onDelete }: Props) => {
+export const TaskCard = memo(function TaskCard({ task, isDragging, onDelete }: Props) {
   const { updateTask } = useTasksActions();
-  const { draggedTask, startDrag, endDrag } = useDrag();
-  const isDragging = draggedTask?.id === task.id;
+  const { startDrag, endDrag } = useDragActions();
 
   const [isEditing, setIsEditing] = useState(false);
   const editButtonRef = useRef<HTMLButtonElement>(null);
@@ -117,4 +117,4 @@ export const TaskCard = ({ task, onDelete }: Props) => {
       )}
     </article>
   );
-};
+});
