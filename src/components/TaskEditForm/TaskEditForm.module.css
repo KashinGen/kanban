@@ -1,0 +1,98 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 16px;
+  width: 100%;
+}
+
+.label {
+  flex-shrink: 0;
+  line-height: 21px;
+  color: var(--color-text-secondary);
+}
+
+.input {
+  flex: 0 1 200px;
+  width: 200px;
+  min-width: 0;
+  height: 22px;
+  padding: 0 9px;
+  border: 1px solid var(--color-field-border);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--color-text);
+  caret-color: var(--color-blue);
+  font: inherit;
+  font-weight: 700;
+  line-height: 20px;
+  letter-spacing: inherit;
+}
+
+.input::placeholder {
+  color: var(--color-text-secondary);
+  font-weight: 400;
+}
+
+.input:hover,
+.input:focus {
+  border-color: var(--color-blue);
+  outline: none;
+}
+
+.input[aria-invalid="true"] {
+  border-color: var(--color-red);
+}
+
+.error {
+  align-self: stretch;
+  margin: 0;
+  font-size: 12px;
+  line-height: 16px;
+  color: var(--color-red);
+}
+
+.buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.button {
+  display: block;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-button-bg);
+  cursor: pointer;
+}
+
+.button svg {
+  display: block;
+}
+
+.button:hover,
+.button:active {
+  background: var(--color-button-bg-hover);
+}
+
+.button:focus-visible {
+  outline: 1px solid var(--color-blue);
+  outline-offset: 2px;
+}
+
+.cancel {
+  color: var(--color-icon-muted);
+}
+
+.save {
+  color: var(--color-blue);
+}
