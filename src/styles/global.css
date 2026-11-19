@@ -3,14 +3,15 @@
   --color-text-secondary: rgba(255, 255, 255, 0.6);
   --color-red: #fc3639;
   --color-red-text: rgba(252, 54, 57, 0.6);
+  --color-red-icon: rgba(252, 54, 57, 0.9);
   --color-blue: #0184cf;
   --color-column-bg: rgba(0, 0, 0, 0.7);
   --color-card-bg: rgba(255, 255, 255, 0.1);
 
   --radius: 4px;
 
-  --page-gap: clamp(16px, 2.08vw, 40px);
-  --inner-gap: clamp(8px, 0.83vw, 16px);
+  --page-gap: clamp(16px, 100vw * 40 / 1920, 40px);
+  --inner-gap: clamp(8px, 100vw * 16 / 1920, 16px);
 }
 
 *,
