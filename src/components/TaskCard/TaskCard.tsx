@@ -61,7 +61,7 @@ export const TaskCard = ({
 
   const className = [
     styles.card,
-    editable && styles.editable,
+    styles.editable,
     isEditing && styles.editing,
     isDragging && styles.dragging,
     overdue && styles.overdue,
@@ -82,18 +82,17 @@ export const TaskCard = ({
       ) : (
         <>
           <div className={styles.actions}>
-            {editable && (
-              <button
-                ref={editButtonRef}
-                type="button"
-                className={`${styles.action} ${styles.edit}`}
-                onClick={() => setIsEditing(true)}
-                aria-label={`Редактировать задачу: ${task.text}`}
-                title="Редактировать"
-              >
-                <EditIcon aria-hidden="true" />
-              </button>
-            )}
+            <button
+              ref={editButtonRef}
+              type="button"
+              className={`${styles.action} ${styles.edit}`}
+              onClick={() => setIsEditing(true)}
+              aria-label={`Редактировать задачу: ${task.text}`}
+              title="Редактировать"
+            >
+              <EditIcon aria-hidden="true" />
+            </button>
+
             <button
               type="button"
               className={`${styles.action} ${styles.delete}`}
