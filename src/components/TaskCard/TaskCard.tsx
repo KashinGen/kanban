@@ -9,11 +9,21 @@ import styles from "./TaskCard.module.css";
 
 interface Props {
   task: Task;
+  isDragging: boolean;
   onDelete: (id: Task["id"]) => void;
   onUpdate: (task: Task) => void;
+  onDragStart: (task: Task) => void;
+  onDragEnd: () => void;
 }
 
-export const TaskCard = ({ task, onDelete, onUpdate }: Props) => {
+export const TaskCard = ({
+  task,
+  isDragging,
+  onDelete,
+  onUpdate,
+  onDragStart,
+  onDragEnd,
+}: Props) => {
   const [isEditing, setIsEditing] = useState(false);
   const editButtonRef = useRef<HTMLButtonElement>(null);
   const restoreFocusRef = useRef(false);
@@ -44,17 +54,30 @@ export const TaskCard = ({ task, onDelete, onUpdate }: Props) => {
     }
   };
 
+  const handleDragStart = (e: React.DragEvent) => {
+    e.dataTransfer.setData("text/plain", String(task.id));
+    e.dataTransfer.effectAllowed = "move";
+    onDragStart(task);
+  };
+
   const className = [
     styles.card,
     editable && styles.editable,
     isEditing && styles.editing,
+    isDragging && styles.dragging,
     overdue && styles.overdue,
   ]
     .filter(Boolean)
     .join(" ");
 
   return (
-    <article className={className} title={overdue && !isEditing ? "Задача просрочена" : undefined}>
+    <article
+      className={className}
+      title={overdue && !isEditing ? "Задача просрочена" : undefined}
+      draggable={!isEditing}
+      onDragStart={isEditing ? undefined : handleDragStart}
+      onDragEnd={onDragEnd}
+    >
       {isEditing ? (
         <TaskEditForm task={task} onSave={handleSave} onCancel={closeEditor} />
       ) : (
