@@ -18,12 +18,7 @@ export const App = () => {
         <SearchField className={styles.search} value={query} onChange={setQuery} />
       </header>
       <main>
-        <Board
-          tasks={visibleTasks}
-          onDelete={deleteTask}
-          onUpdate={updateTask}
-          onMove={moveTask}
-        />
+        <Board tasks={visibleTasks} onDelete={deleteTask} onUpdate={updateTask} onMove={moveTask} />
       </main>
     </div>
   );

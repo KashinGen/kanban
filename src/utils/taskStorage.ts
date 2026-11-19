@@ -21,7 +21,9 @@ const isTask = (value: unknown): value is Task => {
  * Читает задачи из хранилища. Возвращает null, если задач нет
  * (ключ отсутствует, список пуст, данные повреждены или хранилище недоступно).
  */
-export const loadTasks = (storage: Storage | undefined = globalThis.localStorage): Task[] | null => {
+export const loadTasks = (
+  storage: Storage | undefined = globalThis.localStorage,
+): Task[] | null => {
   try {
     const raw = storage?.getItem(TASKS_STORAGE_KEY);
     if (!raw) return null;
