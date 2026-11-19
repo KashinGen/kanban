@@ -18,35 +18,35 @@ const createStorage = (): Storage => {
 const task: Task = { id: 1, type: "todo", startDay: 1, endDay: 2, text: "a" };
 
 describe("taskStorage", () => {
-  it("returns null when key is missing", () => {
+  it("возвращает null, если ключа нет в хранилище", () => {
     expect(loadTasks(createStorage())).toBeNull();
   });
 
-  it("round-trips saved tasks", () => {
+  it("возвращает те же задачи, что были сохранены", () => {
     const storage = createStorage();
     saveTasks([task], storage);
     expect(loadTasks(storage)).toEqual([task]);
   });
 
-  it("returns null for an empty list", () => {
+  it("возвращает null для пустого списка", () => {
     const storage = createStorage();
     saveTasks([], storage);
     expect(loadTasks(storage)).toBeNull();
   });
 
-  it("returns null for corrupted JSON", () => {
+  it("возвращает null для повреждённого JSON", () => {
     const storage = createStorage();
     storage.setItem(TASKS_STORAGE_KEY, "{not json");
     expect(loadTasks(storage)).toBeNull();
   });
 
-  it("returns null when items have the wrong shape", () => {
+  it("возвращает null, если у элементов неверная структура", () => {
     const storage = createStorage();
     storage.setItem(TASKS_STORAGE_KEY, JSON.stringify([{ id: "1" }]));
     expect(loadTasks(storage)).toBeNull();
   });
 
-  it("returns null and does not throw when storage is unavailable", () => {
+  it("возвращает null и не падает, если хранилище недоступно", () => {
     expect(loadTasks(undefined)).toBeNull();
     const throwing = { ...createStorage(), getItem: () => { throw new Error("denied"); } };
     expect(loadTasks(throwing as Storage)).toBeNull();
