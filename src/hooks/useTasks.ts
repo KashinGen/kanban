@@ -16,5 +16,9 @@ export const useTasks = () => {
     setTasks((prev) => prev.filter((task) => task.id !== id));
   }, []);
 
-  return { tasks, deleteTask };
+  const updateTask = useCallback((updated: Task) => {
+    setTasks((prev) => prev.map((task) => (task.id === updated.id ? updated : task)));
+  }, []);
+
+  return { tasks, deleteTask, updateTask };
 };
