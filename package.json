@@ -9,7 +9,7 @@
   "scripts": {
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
-    "test": "jest --passWithNoTests",
+    "test": "jest",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

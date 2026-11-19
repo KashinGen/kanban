@@ -1,0 +1,23 @@
+.page {
+  max-width: 1920px;
+  margin: 0 auto;
+  padding: 0 var(--page-gap) var(--page-gap);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--page-gap);
+  height: 150px;
+  padding-top: 58px;
+}
+
+.title {
+  margin: 0;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 40px;
+  letter-spacing: 0.144px;
+  white-space: nowrap;
+}
