@@ -1,0 +1,46 @@
+.card {
+  padding: 16px var(--inner-gap);
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  background: var(--color-card-bg);
+  font-size: 14px;
+  letter-spacing: -0.4px;
+}
+
+.overdue {
+  border-color: var(--color-red);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 16px;
+}
+
+.label {
+  flex-shrink: 0;
+  line-height: 21px;
+  color: var(--color-text-secondary);
+}
+
+.value {
+  flex: 1 0 0;
+  min-width: 80px;
+  margin: 0;
+  font-weight: 700;
+  line-height: 22px;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.overdue .deadline {
+  color: var(--color-red-text);
+}

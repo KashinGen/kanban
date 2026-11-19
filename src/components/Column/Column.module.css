@@ -1,0 +1,31 @@
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+  padding: 32px var(--inner-gap);
+  border-radius: var(--radius);
+  background: var(--color-column-bg);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 29px;
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(18px, 1.25vw, 24px);
+  font-weight: 700;
+  line-height: 28px;
+  letter-spacing: 0.0864px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
