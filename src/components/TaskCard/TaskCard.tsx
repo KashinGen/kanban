@@ -1,7 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import type { Task } from "../../types/task";
 import { formatDate } from "../../utils/date";
 import { isOverdue } from "../../utils/isOverdue";
+import { useTasksActions } from "../../state/TasksContext";
+import { useDragActions } from "../Board/DragContext";
 import { TaskEditForm } from "../TaskEditForm/TaskEditForm";
 import EditIcon from "../../assets/icons/edit.svg?react";
 import TrashIcon from "../../assets/icons/trash.svg?react";
@@ -11,19 +13,12 @@ interface Props {
   task: Task;
   isDragging: boolean;
   onDelete: (id: Task["id"]) => void;
-  onUpdate: (task: Task) => void;
-  onDragStart: (task: Task) => void;
-  onDragEnd: () => void;
 }
 
-export const TaskCard = ({
-  task,
-  isDragging,
-  onDelete,
-  onUpdate,
-  onDragStart,
-  onDragEnd,
-}: Props) => {
+export const TaskCard = memo(function TaskCard({ task, isDragging, onDelete }: Props) {
+  const { updateTask } = useTasksActions();
+  const { startDrag, endDrag } = useDragActions();
+
   const [isEditing, setIsEditing] = useState(false);
   const editButtonRef = useRef<HTMLButtonElement>(null);
   const restoreFocusRef = useRef(false);
@@ -43,7 +38,7 @@ export const TaskCard = ({
   };
 
   const handleSave = (updated: Task) => {
-    onUpdate(updated);
+    updateTask(updated);
     closeEditor();
   };
 
@@ -56,7 +51,7 @@ export const TaskCard = ({
   const handleDragStart = (e: React.DragEvent) => {
     e.dataTransfer.setData("text/plain", String(task.id));
     e.dataTransfer.effectAllowed = "move";
-    onDragStart(task);
+    startDrag(task);
   };
 
   const className = [
@@ -75,7 +70,7 @@ export const TaskCard = ({
       title={overdue && !isEditing ? "Задача просрочена" : undefined}
       draggable={!isEditing}
       onDragStart={isEditing ? undefined : handleDragStart}
-      onDragEnd={onDragEnd}
+      onDragEnd={endDrag}
     >
       {isEditing ? (
         <TaskEditForm task={task} onSave={handleSave} onCancel={closeEditor} />
@@ -122,4 +117,4 @@ export const TaskCard = ({
       )}
     </article>
   );
-};
+});

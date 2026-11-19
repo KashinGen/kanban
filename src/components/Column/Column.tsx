@@ -1,5 +1,7 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import type { Task, TaskType } from "../../types/task";
+import { useTasksActions } from "../../state/TasksContext";
+import { useDragActions, useDraggedTask } from "../Board/DragContext";
 import { TaskCard } from "../TaskCard/TaskCard";
 import styles from "./Column.module.css";
 
@@ -8,40 +10,31 @@ interface Props {
   title: string;
   icon: string;
   tasks: Task[];
-  draggedTask: Task | null;
-  onDelete: (id: Task["id"]) => void;
-  onUpdate: (task: Task) => void;
-  onDragStart: (task: Task) => void;
-  onDragEnd: () => void;
-  onDrop: (id: Task["id"], type: TaskType) => void;
 }
 
-export const Column = ({
-  type,
-  title,
-  icon,
-  tasks,
-  draggedTask,
-  onDelete,
-  onUpdate,
-  onDragStart,
-  onDragEnd,
-  onDrop,
-}: Props) => {
+export const Column = ({ type, title, icon, tasks }: Props) => {
+  const { deleteTask, moveTask } = useTasksActions();
+  const draggedTask = useDraggedTask();
+  const { endDrag } = useDragActions();
+
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
-  /** Позиция удалённой карточки — куда вернуть фокус после перерисовки. */
   const focusIndexRef = useRef<number | null>(null);
   const [isDropTarget, setIsDropTarget] = useState(false);
 
   const canDrop = draggedTask !== null && draggedTask.type !== type;
 
+  const tasksRef = useRef(tasks);
+  useLayoutEffect(() => {
+    tasksRef.current = tasks;
+  }, [tasks]);
+
   const handleDelete = useCallback(
     (id: Task["id"]) => {
-      focusIndexRef.current = tasks.findIndex((task) => task.id === id);
-      onDelete(id);
+      focusIndexRef.current = tasksRef.current.findIndex((task) => task.id === id);
+      deleteTask(id);
     },
-    [tasks, onDelete],
+    [deleteTask],
   );
 
   useLayoutEffect(() => {
@@ -75,7 +68,8 @@ export const Column = ({
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDropTarget(false);
-    if (canDrop) onDrop(draggedTask.id, type);
+    if (canDrop) moveTask(draggedTask.id, type);
+    endDrag();
   };
 
   return (
@@ -99,9 +93,6 @@ export const Column = ({
           task={task}
           isDragging={draggedTask?.id === task.id}
           onDelete={handleDelete}
-          onUpdate={onUpdate}
-          onDragStart={onDragStart}
-          onDragEnd={onDragEnd}
         />
       ))}
     </section>
