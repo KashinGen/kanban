@@ -29,7 +29,6 @@ export const TaskCard = ({
   const restoreFocusRef = useRef(false);
 
   const overdue = isOverdue(task);
-  const editable = task.type === "todo";
 
   useEffect(() => {
     if (!isEditing && restoreFocusRef.current) {
