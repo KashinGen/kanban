@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import type { Task } from "../../types/task";
 import { formatDate } from "../../utils/date";
 import { isOverdue } from "../../utils/isOverdue";
+import { useTasksActions } from "../../state/TasksContext";
+import { useDrag } from "../Board/DragContext";
 import { TaskEditForm } from "../TaskEditForm/TaskEditForm";
 import EditIcon from "../../assets/icons/edit.svg?react";
 import TrashIcon from "../../assets/icons/trash.svg?react";
@@ -9,27 +11,19 @@ import styles from "./TaskCard.module.css";
 
 interface Props {
   task: Task;
-  isDragging: boolean;
   onDelete: (id: Task["id"]) => void;
-  onUpdate: (task: Task) => void;
-  onDragStart: (task: Task) => void;
-  onDragEnd: () => void;
 }
 
-export const TaskCard = ({
-  task,
-  isDragging,
-  onDelete,
-  onUpdate,
-  onDragStart,
-  onDragEnd,
-}: Props) => {
+export const TaskCard = ({ task, onDelete }: Props) => {
+  const { updateTask } = useTasksActions();
+  const { draggedTask, startDrag, endDrag } = useDrag();
+  const isDragging = draggedTask?.id === task.id;
+
   const [isEditing, setIsEditing] = useState(false);
   const editButtonRef = useRef<HTMLButtonElement>(null);
   const restoreFocusRef = useRef(false);
 
   const overdue = isOverdue(task);
-  const editable = task.type === "todo";
 
   useEffect(() => {
     if (!isEditing && restoreFocusRef.current) {
@@ -44,7 +38,7 @@ export const TaskCard = ({
   };
 
   const handleSave = (updated: Task) => {
-    onUpdate(updated);
+    updateTask(updated);
     closeEditor();
   };
 
@@ -57,12 +51,12 @@ export const TaskCard = ({
   const handleDragStart = (e: React.DragEvent) => {
     e.dataTransfer.setData("text/plain", String(task.id));
     e.dataTransfer.effectAllowed = "move";
-    onDragStart(task);
+    startDrag(task);
   };
 
   const className = [
     styles.card,
-    editable && styles.editable,
+    styles.editable,
     isEditing && styles.editing,
     isDragging && styles.dragging,
     overdue && styles.overdue,
@@ -76,25 +70,24 @@ export const TaskCard = ({
       title={overdue && !isEditing ? "Задача просрочена" : undefined}
       draggable={!isEditing}
       onDragStart={isEditing ? undefined : handleDragStart}
-      onDragEnd={onDragEnd}
+      onDragEnd={endDrag}
     >
       {isEditing ? (
         <TaskEditForm task={task} onSave={handleSave} onCancel={closeEditor} />
       ) : (
         <>
           <div className={styles.actions}>
-            {editable && (
-              <button
-                ref={editButtonRef}
-                type="button"
-                className={`${styles.action} ${styles.edit}`}
-                onClick={() => setIsEditing(true)}
-                aria-label={`Редактировать задачу: ${task.text}`}
-                title="Редактировать"
-              >
-                <EditIcon aria-hidden="true" />
-              </button>
-            )}
+            <button
+              ref={editButtonRef}
+              type="button"
+              className={`${styles.action} ${styles.edit}`}
+              onClick={() => setIsEditing(true)}
+              aria-label={`Редактировать задачу: ${task.text}`}
+              title="Редактировать"
+            >
+              <EditIcon aria-hidden="true" />
+            </button>
+
             <button
               type="button"
               className={`${styles.action} ${styles.delete}`}

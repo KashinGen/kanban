@@ -2,6 +2,10 @@
 
 Канбан-доска на **webpack + React + TypeScript** (тестовое задание).
 
+## Демо
+
+**[Открыть демо на Vercel](https://kanban-hqwl.vercel.app/)**
+
 ## Запуск
 
 Требуется Node.js 18.18.0+ (см. `.nvmrc`).
