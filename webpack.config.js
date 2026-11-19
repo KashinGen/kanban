@@ -43,7 +43,7 @@ module.exports = (_env, argv) => {
           ],
         },
         {
-          test: /\.(svg|png|jpe?g|woff2?)$/,
+          test: /\.(svg|png|jpe?g|webp|woff2?)$/,
           type: "asset",
         },
       ],
