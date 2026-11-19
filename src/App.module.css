@@ -21,3 +21,8 @@
   letter-spacing: 0.144px;
   white-space: nowrap;
 }
+
+.search {
+  flex: 0 0 calc((100% - 3 * var(--page-gap)) / 4);
+  min-width: 0;
+}

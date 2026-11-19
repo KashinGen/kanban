@@ -13,6 +13,9 @@
   --color-field-border: rgba(255, 255, 255, 0.5);
   --color-button-bg: rgba(255, 255, 255, 0.08);
   --color-button-bg-hover: rgba(255, 255, 255, 0.2);
+  --color-search-bg: rgba(255, 255, 255, 0.07);
+  --color-search-border: rgba(255, 255, 255, 0.3);
+  --color-search-ring: rgba(1, 132, 207, 0.5);
 
   --radius: 4px;
 
