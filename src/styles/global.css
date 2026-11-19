@@ -7,6 +7,12 @@
   --color-blue: #0184cf;
   --color-column-bg: rgba(0, 0, 0, 0.7);
   --color-card-bg: rgba(255, 255, 255, 0.1);
+  --color-card-bg-editing: rgba(255, 255, 255, 0.07);
+  --color-icon: rgba(255, 255, 255, 0.8);
+  --color-icon-muted: rgba(255, 255, 255, 0.7);
+  --color-field-border: rgba(255, 255, 255, 0.5);
+  --color-button-bg: rgba(255, 255, 255, 0.08);
+  --color-button-bg-hover: rgba(255, 255, 255, 0.2);
 
   --radius: 4px;
 
