@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-import type { Task } from "../types/task";
+import type { Task, TaskType } from "../types/task";
 import initialTasks from "../data/tasks.json";
 import { loadTasks, saveTasks } from "../utils/taskStorage";
+import { moveTask } from "../utils/moveTask";
 
 const getInitialTasks = (): Task[] => loadTasks() ?? (initialTasks as Task[]);
 
@@ -20,5 +21,9 @@ export const useTasks = () => {
     setTasks((prev) => prev.map((task) => (task.id === updated.id ? updated : task)));
   }, []);
 
-  return { tasks, deleteTask, updateTask };
+  const moveTaskTo = useCallback((id: Task["id"], type: TaskType) => {
+    setTasks((prev) => moveTask(prev, id, type));
+  }, []);
+
+  return { tasks, deleteTask, updateTask, moveTask: moveTaskTo };
 };

@@ -18,6 +18,18 @@
   --outline-color: var(--color-blue);
 }
 
+.card[draggable="true"] {
+  cursor: grab;
+}
+
+.card[draggable="true"]:active {
+  cursor: grabbing;
+}
+
+.dragging {
+  opacity: 0.4;
+}
+
 .card.editing {
   --outline-color: var(--color-blue);
   background: var(--color-card-bg-editing);
