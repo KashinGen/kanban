@@ -5,9 +5,27 @@ const at = (day: number, month: number, year: number, hour = 12) =>
   new Date(year, month - 1, day, hour).getTime();
 
 const tasks: Task[] = [
-  { id: 1, type: "todo", startDay: at(1, 3, 2025), endDay: at(5, 3, 2025), text: "Сверстать шапку" },
-  { id: 2, type: "done", startDay: at(5, 3, 2025, 23), endDay: at(9, 3, 2025), text: "Написать тесты" },
-  { id: 3, type: "review", startDay: at(10, 3, 2025), endDay: at(12, 3, 2025), text: "Ревью ШАПКИ" },
+  {
+    id: 1,
+    type: "todo",
+    startDay: at(1, 3, 2025),
+    endDay: at(5, 3, 2025),
+    text: "Сверстать шапку",
+  },
+  {
+    id: 2,
+    type: "done",
+    startDay: at(5, 3, 2025, 23),
+    endDay: at(9, 3, 2025),
+    text: "Написать тесты",
+  },
+  {
+    id: 3,
+    type: "review",
+    startDay: at(10, 3, 2025),
+    endDay: at(12, 3, 2025),
+    text: "Ревью ШАПКИ",
+  },
 ];
 
 const ids = (list: Task[]) => list.map((task) => task.id);

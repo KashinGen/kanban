@@ -32,9 +32,7 @@ module.exports = (_env, argv) => {
               options: {
                 modules: {
                   auto: /\.module\.css$/,
-                  localIdentName: isProd
-                    ? "[hash:base64:6]"
-                    : "[name]__[local]",
+                  localIdentName: isProd ? "[hash:base64:6]" : "[name]__[local]",
                   namedExport: false,
                   exportLocalsConvention: "as-is",
                 },

@@ -49,9 +49,8 @@ export const Column = ({
     if (index === null) return;
     focusIndexRef.current = null;
 
-    const buttons = sectionRef.current?.querySelectorAll<HTMLButtonElement>(
-      "[data-action='delete']",
-    );
+    const buttons =
+      sectionRef.current?.querySelectorAll<HTMLButtonElement>("[data-action='delete']");
     const target = buttons?.[Math.min(index, buttons.length - 1)];
     (target ?? titleRef.current)?.focus();
   }, [tasks]);

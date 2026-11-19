@@ -48,7 +48,12 @@ describe("taskStorage", () => {
 
   it("возвращает null и не падает, если хранилище недоступно", () => {
     expect(loadTasks(undefined)).toBeNull();
-    const throwing = { ...createStorage(), getItem: () => { throw new Error("denied"); } };
+    const throwing = {
+      ...createStorage(),
+      getItem: () => {
+        throw new Error("denied");
+      },
+    };
     expect(loadTasks(throwing as Storage)).toBeNull();
     expect(() => saveTasks([task], undefined)).not.toThrow();
   });
