@@ -4,7 +4,7 @@ import { useTasks } from "./hooks/useTasks";
 import styles from "./App.module.css";
 
 export const App = () => {
-  const { tasks, deleteTask } = useTasks();
+  const { tasks, deleteTask, updateTask } = useTasks();
 
   return (
     <div className={styles.page}>
@@ -12,7 +12,7 @@ export const App = () => {
         <h1 className={styles.title}>Your tasks</h1>
       </header>
       <main>
-        <Board tasks={tasks} onDelete={deleteTask} />
+        <Board tasks={tasks} onDelete={deleteTask} onUpdate={updateTask} />
       </main>
     </div>
   );

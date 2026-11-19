@@ -18,6 +18,11 @@
   --outline-color: var(--color-blue);
 }
 
+.card.editing {
+  --outline-color: var(--color-blue);
+  background: var(--color-card-bg-editing);
+}
+
 /* Просрочка важнее состояния наведения/фокуса: красная рамка остаётся всегда. */
 .card.overdue {
   --outline-color: var(--color-red);
@@ -66,6 +71,15 @@
   outline-offset: 2px;
 }
 
+.edit {
+  color: var(--color-icon);
+}
+
+.edit:hover,
+.edit:active {
+  color: var(--color-blue);
+}
+
 .delete:hover,
 .delete:active {
   color: var(--color-red-icon);
@@ -87,6 +101,10 @@
 
 .row:first-child {
   padding-right: 34px;
+}
+
+.editable .row:first-child {
+  padding-right: 68px;
 }
 
 .label {

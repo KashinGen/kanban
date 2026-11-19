@@ -8,9 +8,10 @@ interface Props {
   icon: string;
   tasks: Task[];
   onDelete: (id: Task["id"]) => void;
+  onUpdate: (task: Task) => void;
 }
 
-export const Column = ({ title, icon, tasks, onDelete }: Props) => {
+export const Column = ({ title, icon, tasks, onDelete, onUpdate }: Props) => {
   const sectionRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   /** Позиция удалённой карточки — куда вернуть фокус после перерисовки. */
@@ -45,7 +46,7 @@ export const Column = ({ title, icon, tasks, onDelete }: Props) => {
         </h2>
       </header>
       {tasks.map((task) => (
-        <TaskCard key={task.id} task={task} onDelete={handleDelete} />
+        <TaskCard key={task.id} task={task} onDelete={handleDelete} onUpdate={onUpdate} />
       ))}
     </section>
   );
